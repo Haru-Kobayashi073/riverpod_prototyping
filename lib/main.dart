@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_countup/provider.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -17,14 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends ConsumerWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   void _incrementCounter() {
   }
@@ -35,7 +35,7 @@ class MyHomePage extends ConsumerWidget {
   
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(ref.watch(titleProvider)),
       ),
       body: Center(
         child: Column(

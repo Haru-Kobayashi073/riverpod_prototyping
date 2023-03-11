@@ -26,13 +26,12 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
 
-  void _incrementCounter() {
-  }
+  void _incrementCounter() {}
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-  int counter = 0;
-  
+    int counter = 0;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(ref.watch(titleProvider)),
@@ -41,8 +40,8 @@ class MyHomePage extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              ref.watch(messageProvider),
             ),
             Text(
               '$counter',
@@ -57,6 +56,5 @@ class MyHomePage extends ConsumerWidget {
         child: const Icon(Icons.add),
       ),
     );
+  }
 }
-}
-

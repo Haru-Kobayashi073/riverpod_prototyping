@@ -23,9 +23,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
+  @override
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,29 +44,20 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) =>
-                  Text(
-                ref.watch(messageProvider),
-              ),
+            Text(
+              ref.watch(messageProvider),
             ),
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) =>
-                  Text(
-                ref.watch(countProvider).toString(),
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+            Text(
+              ref.watch(countProvider).toString(),
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
-      floatingActionButton: Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) =>
-            FloatingActionButton(
-          onPressed: () => ref.read(countProvider.notifier).state++,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => ref.read(countProvider.notifier).state++,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }

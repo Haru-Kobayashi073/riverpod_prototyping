@@ -57,22 +57,28 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               children: [
                 FloatingActionButton(
                   onPressed: () => ref.read(countProvider.notifier).state++,
-                  tooltip: 'Increment',
                   child: const Icon(CupertinoIcons.plus),
                 ),
                 FloatingActionButton(
                   onPressed: () => ref.read(countProvider.notifier).state++,
-                  tooltip: 'Increment',
                   child: const Icon(CupertinoIcons.minus),
                 ),
               ],
             ),
-            const SizedBox(height: 14,),
+            const SizedBox(
+              height: 14,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
-                Text('1', style: TextStyle(fontSize: 30),),
-                Text('2', style: TextStyle(fontSize: 30),)
+                Text(
+                  '1',
+                  style: TextStyle(fontSize: 30),
+                ),
+                Text(
+                  '2',
+                  style: TextStyle(fontSize: 30),
+                )
               ],
             )
           ],

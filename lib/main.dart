@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_countup/data/count_data.dart';
 import 'package:riverpod_countup/provider.dart';
 
 void main() {
@@ -49,18 +50,32 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ref.watch(messageProvider),
             ),
             Text(
-              ref.watch(countProvider).toString(),
+              ref.watch(countDataProvider).count.toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FloatingActionButton(
-                  onPressed: () => ref.read(countProvider.notifier).state++,
+                  onPressed: () {
+                    CountData countData = ref.read(countDataProvider);
+                    ref.read(countDataProvider.notifier).state =
+                        countData.copyWith(
+                      count: countData.count + 1,
+                      countUp: countData.countUp + 1,
+                    );
+                  },
                   child: const Icon(CupertinoIcons.plus),
                 ),
                 FloatingActionButton(
-                  onPressed: () => ref.read(countProvider.notifier).state++,
+                  onPressed: () {
+                    CountData countData = ref.read(countDataProvider);
+                    ref.read(countDataProvider.notifier).state =
+                        countData.copyWith(
+                      count: countData.count - 1,
+                      countUp: countData.countDown + 1,
+                    );
+                  },
                   child: const Icon(CupertinoIcons.minus),
                 ),
               ],
@@ -70,14 +85,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
+              children: [
                 Text(
-                  '1',
-                  style: TextStyle(fontSize: 30),
+                  ref.watch(countDataProvider).countUp.toString(),
+                  style: const TextStyle(fontSize: 30),
                 ),
                 Text(
-                  '2',
-                  style: TextStyle(fontSize: 30),
+                  ref.watch(countDataProvider).countDown.toString(),
+                  style: const TextStyle(fontSize: 30),
                 )
               ],
             )
@@ -85,7 +100,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => ref.read(countProvider.notifier).state++,
+        onPressed: () {
+          ref.read(countDataProvider.notifier).state =
+              const CountData(count: 0, countUp: 0, countDown: 0);
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.refresh),
       ),

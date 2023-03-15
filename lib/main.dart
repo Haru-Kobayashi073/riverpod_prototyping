@@ -73,7 +73,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     ref.read(countDataProvider.notifier).state =
                         countData.copyWith(
                       count: countData.count - 1,
-                      countUp: countData.countDown + 1,
+                      countDown: countData.countDown + 1,
                     );
                   },
                   child: const Icon(CupertinoIcons.minus),
@@ -87,11 +87,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  ref.watch(countDataProvider).countUp.toString(),
+                  ref
+                      .watch(countDataProvider.select((value) => value.countUp))
+                      .toString(),
                   style: const TextStyle(fontSize: 30),
                 ),
                 Text(
-                  ref.watch(countDataProvider).countDown.toString(),
+                  ref
+                      .watch(
+                          countDataProvider.select((value) => value.countDown))
+                      .toString(),
                   style: const TextStyle(fontSize: 30),
                 )
               ],

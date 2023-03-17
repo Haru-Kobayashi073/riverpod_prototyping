@@ -8,8 +8,13 @@ class ViewModel {
   late WidgetRef _ref;
 
   void setRef(WidgetRef ref) {
-    this._ref = ref;
+    _ref = ref;
   }
 
   get count => _ref.watch(countDataProvider).count.toString();
+  get countUp =>
+      _ref.watch(countDataProvider.select((value) => value.countUp)).toString();
+  get countDown => _ref
+      .watch(countDataProvider.select((value) => value.countDown))
+      .toString();
 }

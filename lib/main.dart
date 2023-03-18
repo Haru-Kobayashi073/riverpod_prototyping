@@ -17,28 +17,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: const MyHomePage(),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.deepPurple,
+        ),
+        home: MyHomePage(ViewModel()));
   }
 }
 
 class MyHomePage extends ConsumerStatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage(
+    this.viewModel, {
+    super.key,
+  });
+  final ViewModel viewModel;
 
   @override
   ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  ViewModel _viewModel = ViewModel();
+  late ViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
+    _viewModel = widget.viewModel;
     _viewModel.setRef(ref);
   }
 

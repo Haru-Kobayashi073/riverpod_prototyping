@@ -11,6 +11,11 @@ void main() {
     List<Device> devices = [iPhone55];
     ViewModel viewModel = ViewModel();
 
-    // await tester.pumpWidgetBuilder(const ProviderScope(child: MyHomePage()));
+    await tester.pumpWidgetBuilder(ProviderScope(child: MyHomePage(viewModel)));
+    await multiScreenGolden(
+      tester,
+      'MyHomePage_0init',
+      devices: devices,
+    );
   });
 }

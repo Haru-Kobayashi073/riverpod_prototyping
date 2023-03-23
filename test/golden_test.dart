@@ -43,5 +43,21 @@ void main() {
     await tester.pumpWidgetBuilder(ProviderScope(child: MyHomePage(mock)));
 
     await multiScreenGolden(tester, 'myHomePage_mock', devices: devices);
+
+    verifyNever(() => mock.onIncrease());
+    verifyNever(() => mock.onDecrease());
+    verifyNever(() => mock.onReset());
+
+    await tester.tap(find.byIcon(CupertinoIcons.plus));
+
+    verify(() => mock.onIncrease()).called(1);
+    verifyNever(() => mock.onDecrease());
+    verifyNever(() => mock.onReset());
+
+    await tester.tap(find.byIcon(CupertinoIcons.minus));
+
+    verifyNever(() => mock.onIncrease());
+    verify(() => mock.onDecrease()).called(1);
+    verifyNever(() => mock.onReset());
   });
 }

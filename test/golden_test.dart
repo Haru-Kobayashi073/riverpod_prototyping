@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:riverpod_countup/main.dart';
+import 'package:riverpod_countup/provider.dart';
 import 'package:riverpod_countup/view_model.dart';
 
 class MockViewModel extends Mock implements ViewModel {}
@@ -40,7 +41,18 @@ void main() {
     when(() => mock.countUp).thenReturn(2123456789.toString());
     when(() => mock.countDown).thenReturn(3123456789.toString());
 
-    await tester.pumpWidgetBuilder(ProviderScope(child: MyHomePage(mock)));
+    // final mockTitleProvider = Provider<String>((ref) => 'mockTitle');
+    // final mockMesssageProvider = Provider<String>((ref) => 'mockMessage');
+
+    await tester.pumpWidgetBuilder(
+      ProviderScope(
+        overrides: [
+          titleProvider.overrideWithValue('mockTitle'),
+          messageProvider.overrideWithValue('mockMessage')
+        ],
+        child: MyHomePage(mock),
+      )
+    );
 
     await multiScreenGolden(tester, 'myHomePage_mock', devices: devices);
 

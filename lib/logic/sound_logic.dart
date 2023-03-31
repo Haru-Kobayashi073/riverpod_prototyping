@@ -13,12 +13,12 @@ class SoundLogic {
     _cache.loadAll([soundDataUp, soundDataDown, soundDataReset]);
   }
 
-  void valueChanged(CountData oldData, CountData newData) {
-    if (newData.countUp == 0 && newData.countDown == 0 && newData.count == 0) {
+  void valueChanged(CountData oldValue, CountData newValue) {
+    if (newValue.countUp == 0 && newValue.countDown == 0 && newValue.count == 0) {
       playResetSound();
-    } else if (oldData.countUp + 1 == newData.countUp) {
+    } else if (oldValue.countUp + 1 == newValue.countUp) {
       playUpSound();
-    } else if (oldData.countDown + 1 == newData.countDown) {
+    } else if (oldValue.countDown + 1 == newValue.countDown) {
       playDownSound();
     }
   }

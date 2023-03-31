@@ -70,10 +70,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/FontManifest.json
-    - sounds/Onoma-Inspiration07-1(High).mp3
-    - sounds/Onoma-Inspiration08-4(High).mp3
-    - sounds/Onoma-Inspiration11-2(Mid).mp3
+    - assets/
+    - assets/sounds/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:riverpod_countup/data/count_data.dart';
 
 class SoundLogic {
   static const soundDataUp = 'sounds/Onoma-Inspiration07-1(High).mp3';
@@ -10,6 +11,16 @@ class SoundLogic {
 
   void load() {
     _cache.loadAll([soundDataUp, soundDataDown, soundDataReset]);
+  }
+
+  void valueChanged(CountData oldData, CountData newData) {
+    if (newData.countUp == 0 && newData.countDown == 0 && newData.count == 0) {
+      playResetSound();
+    } else if (oldData.countUp + 1 == newData.countUp) {
+      playUpSound();
+    } else if (oldData.countDown + 1 == newData.countDown) {
+      playDownSound();
+    }
   }
 
   void playUpSound() {

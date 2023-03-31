@@ -1,5 +1,7 @@
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_countup/data/count_data.dart';
+import 'package:riverpod_countup/logic/button_animation_logic.dart';
 import 'package:riverpod_countup/logic/logic.dart';
 import 'package:riverpod_countup/logic/sound_logic.dart';
 import 'package:riverpod_countup/provider.dart';
@@ -7,11 +9,13 @@ import 'package:riverpod_countup/provider.dart';
 class ViewModel {
   final Logic _logic = Logic();
   final SoundLogic _soundLogic = SoundLogic();
+  late ButtonAnimationLogic _buttonAnimationLogicPlus;
 
   late WidgetRef _ref;
 
-  void setRef(WidgetRef ref) {
+  void setRef(WidgetRef ref, TickerProvider tickerProvider) {
     _ref = ref;
+    _buttonAnimationLogicPlus = ButtonAnimationLogic(tickerProvider);
     _soundLogic.load();
   }
 
@@ -22,8 +26,11 @@ class ViewModel {
       .watch(countDataProvider.select((value) => value.countDown))
       .toString();
 
+  get animationPlus => _buttonAnimationLogicPlus.animationScale;
+
   void onIncrease() {
     _logic.increase();
+    _buttonAnimationLogicPlus.start();
     update();
   }
 

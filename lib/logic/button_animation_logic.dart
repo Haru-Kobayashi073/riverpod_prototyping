@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_countup/data/count_data.dart';
+import 'package:riverpod_countup/logic/count_data_changed_notifier.dart';
 
-class ButtonAnimationLogic {
+class ButtonAnimationLogic with COuntDataChangedNotifier{
   late AnimationController _animationController;
   late Animation<double> _animationScale;
 
@@ -27,6 +28,7 @@ class ButtonAnimationLogic {
         .whenComplete(() => _animationController.reset());
   }
 
+  @override
   void valueChanged(CountData oldValue, CountData newValue) {
     if (oldValue.countUp + 1 != newValue.countUp) {
       return;

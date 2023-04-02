@@ -2,6 +2,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_countup/data/count_data.dart';
 import 'package:riverpod_countup/logic/button_animation_logic.dart';
+import 'package:riverpod_countup/logic/count_data_changed_notifier.dart';
 import 'package:riverpod_countup/logic/logic.dart';
 import 'package:riverpod_countup/logic/sound_logic.dart';
 import 'package:riverpod_countup/provider.dart';
@@ -13,10 +14,14 @@ class ViewModel {
 
   late WidgetRef _ref;
 
+  List<COuntDataChangedNotifier> notifiers = [];
+
   void setRef(WidgetRef ref, TickerProvider tickerProvider) {
     _ref = ref;
     _buttonAnimationLogicPlus = ButtonAnimationLogic(tickerProvider);
     _soundLogic.load();
+
+    notifiers = [_soundLogic, _buttonAnimationLogicPlus];
   }
 
   get count => _ref.watch(countDataProvider).count.toString();
@@ -47,7 +52,9 @@ class ViewModel {
     CountData oldValue = _ref.watch(countDataProvider.notifier).state;
     _ref.watch(countDataProvider.notifier).state = _logic.countData;
     CountData newValue = _ref.watch(countDataProvider.notifier).state;
-    _soundLogic.valueChanged(oldValue, newValue);
-    _buttonAnimationLogicPlus.valueChanged(oldValue, newValue);
+
+    for (var element in notifiers) {
+      element.valueChanged(oldValue, newValue);
+    }
   }
 }

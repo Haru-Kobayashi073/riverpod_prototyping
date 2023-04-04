@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_countup/data/count_data.dart';
 import 'package:riverpod_countup/logic/count_data_changed_notifier.dart';
@@ -21,7 +23,8 @@ class ButtonAnimationLogic with COuntDataChangedNotifier {
         .drive(Tween(begin: 1.0, end: 1.8));
 
     _animationRotation = _animationController
-        .drive(CurveTween(curve: const Interval(0.1, 0.7)))
+        .drive(
+            CurveTween(curve: Interval(0.0, 0.9, curve: ButtonRotateCurve())))
         .drive(Tween(begin: 1.0, end: 1.8));
   }
 
@@ -41,5 +44,12 @@ class ButtonAnimationLogic with COuntDataChangedNotifier {
     if (startCondition(oldValue, newValue)) {
       start();
     }
+  }
+}
+
+class ButtonRotateCurve extends Curve {
+  @override
+  double transform(double t) {
+    return math.sin(2 * math.pi * t) / 16;
   }
 }

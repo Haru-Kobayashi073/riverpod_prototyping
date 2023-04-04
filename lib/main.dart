@@ -72,11 +72,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
               children: [
                 FloatingActionButton(
                   onPressed: _viewModel.onIncrease,
-                  child: ScaleTransition(
-                      scale: _viewModel.animationPlus,
-                      child: RotationTransition(
-                        turns: _viewModel.animationPlusRotation,
-                        child: const Icon(CupertinoIcons.plus))),
+                  child: ButtonAnimation(viewModel: _viewModel),
                 ),
                 FloatingActionButton(
                   onPressed: _viewModel.onDecrease,
@@ -112,5 +108,23 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
             child: const Icon(CupertinoIcons.refresh)),
       ),
     );
+  }
+}
+
+class ButtonAnimation extends StatelessWidget {
+  const ButtonAnimation({
+    super.key,
+    required ViewModel viewModel,
+  }) : _viewModel = viewModel;
+
+  final ViewModel _viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+        scale: _viewModel.animationPlusScale,
+        child: RotationTransition(
+            turns: _viewModel.animationPlusRotation,
+            child: const Icon(CupertinoIcons.plus)));
   }
 }

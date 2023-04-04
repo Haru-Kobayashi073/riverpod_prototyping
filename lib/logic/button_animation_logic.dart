@@ -53,3 +53,10 @@ class ButtonRotateCurve extends Curve {
     return math.sin(2 * math.pi * t) / 16;
   }
 }
+
+class AnimationCombination {
+  final Animation<double> animationScale;
+  final Animation<double> animationRotation;
+
+  AnimationCombination(this.animationScale, this.animationRotation);
+}

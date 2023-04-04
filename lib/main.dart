@@ -74,7 +74,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
                   onPressed: _viewModel.onIncrease,
                   child: ScaleTransition(
                       scale: _viewModel.animationPlus,
-                      child: const Icon(CupertinoIcons.plus)),
+                      child: RotationTransition(
+                        turns: _viewModel.animationPlus,
+                        child: const Icon(CupertinoIcons.plus))),
                 ),
                 FloatingActionButton(
                   onPressed: _viewModel.onDecrease,

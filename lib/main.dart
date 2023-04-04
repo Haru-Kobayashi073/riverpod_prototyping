@@ -73,13 +73,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
               children: [
                 FloatingActionButton(
                   onPressed: _viewModel.onIncrease,
-                  child: ButtonAnimation(animationCombination: _viewModel.animationPlusCombination),
+                  child: ButtonAnimation(
+                    animationCombination: _viewModel.animationPlusCombination,
+                    child: const Icon(CupertinoIcons.plus),
+                  ),
                 ),
                 FloatingActionButton(
                   onPressed: _viewModel.onDecrease,
-                  child: ScaleTransition(
-                      scale: _viewModel.animationMinus,
-                      child: const Icon(CupertinoIcons.minus)),
+                  child: ButtonAnimation(
+                    animationCombination: _viewModel.animationMinusCombination,
+                    child: const Icon(CupertinoIcons.minus),
+                  ),
                 ),
               ],
             ),
@@ -104,8 +108,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _viewModel.onReset,
-        child: ScaleTransition(
-            scale: _viewModel.animationReset,
+        child: ButtonAnimation(
+                    animationCombination: _viewModel.animationResetCombination,
             child: const Icon(CupertinoIcons.refresh)),
       ),
     );
@@ -113,19 +117,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
 }
 
 class ButtonAnimation extends StatelessWidget {
-  const ButtonAnimation({
-    super.key,
-    required this.animationCombination,
-  });
+  const ButtonAnimation(
+      {super.key, required this.animationCombination, required this.child});
 
   final AnimationCombination animationCombination;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return ScaleTransition(
         scale: animationCombination.animationScale,
         child: RotationTransition(
-            turns: animationCombination.animationRotation,
-            child: const Icon(CupertinoIcons.plus)));
+            turns: animationCombination.animationRotation, child: child));
   }
 }

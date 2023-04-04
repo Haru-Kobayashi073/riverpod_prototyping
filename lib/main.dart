@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_countup/data/count_data.dart';
+import 'package:riverpod_countup/logic/button_animation_logic.dart';
 import 'package:riverpod_countup/provider.dart';
 import 'package:riverpod_countup/view_model.dart';
 
@@ -72,7 +73,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
               children: [
                 FloatingActionButton(
                   onPressed: _viewModel.onIncrease,
-                  child: ButtonAnimation(viewModel: _viewModel),
+                  child: ButtonAnimation(animationCombination: _viewModel.animationPlusCombination),
                 ),
                 FloatingActionButton(
                   onPressed: _viewModel.onDecrease,
@@ -114,17 +115,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
 class ButtonAnimation extends StatelessWidget {
   const ButtonAnimation({
     super.key,
-    required ViewModel viewModel,
-  }) : _viewModel = viewModel;
+    required this.animationCombination,
+  });
 
-  final ViewModel _viewModel;
+  final AnimationCombination animationCombination;
 
   @override
   Widget build(BuildContext context) {
     return ScaleTransition(
-        scale: _viewModel.animationPlusScale,
+        scale: animationCombination.animationScale,
         child: RotationTransition(
-            turns: _viewModel.animationPlusRotation,
+            turns: animationCombination.animationRotation,
             child: const Icon(CupertinoIcons.plus)));
   }
 }

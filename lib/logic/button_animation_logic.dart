@@ -9,8 +9,11 @@ class ButtonAnimationLogic with COuntDataChangedNotifier {
   late Animation<double> _animationScale;
   late Animation<double> _animationRotation;
 
+  late AnimationCombination _animationCombination;
+
   get animationScale => _animationScale;
   get animationRotation => _animationRotation;
+  get animationCombination => _animationCombination;
 
   ValueChangedCondition startCondition;
 
@@ -26,6 +29,9 @@ class ButtonAnimationLogic with COuntDataChangedNotifier {
         .drive(
             CurveTween(curve: Interval(0.0, 0.9, curve: ButtonRotateCurve())))
         .drive(Tween(begin: 1.0, end: 1.8));
+
+    _animationCombination =
+        AnimationCombination(_animationScale, _animationRotation);
   }
 
   @override

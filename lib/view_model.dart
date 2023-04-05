@@ -46,8 +46,10 @@ class ViewModel {
       SharedPreferencesLogic(),
     ];
 
-    SharedPreferencesLogic.read()
-        .then((value) => ref.read(countDataProvider.notifier).state = value);
+    SharedPreferencesLogic.read().then((value) {
+      _logic.init(value);
+      update();
+    });
   }
 
   get count => _ref.watch(countDataProvider).count.toString();
